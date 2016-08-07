@@ -1,0 +1,53 @@
+PODS:
+  - Alamofire (3.2.1)
+  - AsyncDisplayKit (1.9.81):
+    - AsyncDisplayKit/PINRemoteImage (= 1.9.81)
+  - AsyncDisplayKit/ASDealloc2MainObject (1.9.81)
+  - AsyncDisplayKit/Core (1.9.81):
+    - AsyncDisplayKit/ASDealloc2MainObject
+  - AsyncDisplayKit/PINRemoteImage (1.9.81):
+    - AsyncDisplayKit/Core
+    - PINRemoteImage/iOS (>= 3.0.0-beta.2)
+  - AsyncSwift (1.7.3)
+  - hpple (0.2.0)
+  - JSPatchSDK (1.5.2)
+  - JZNavigationExtension (1.5.0.1)
+  - MGSwipeTableCell (1.5.5)
+  - PINCache (3.0.0-beta)
+  - PINRemoteImage/Core (3.0.0-beta.3):
+    - PINCache (>= 3.0.0-beta)
+  - PINRemoteImage/iOS (3.0.0-beta.3):
+    - PINRemoteImage/Core
+  - RESideMenu (4.0.7)
+  - SnapKit (0.19.1)
+  - SwiftyJSON (2.3.2)
+
+DEPENDENCIES:
+  - Alamofire (~> 3.2.1)
+  - AsyncDisplayKit (~> 1.9.81)
+  - AsyncSwift (~> 1.7.2)
+  - hpple (~> 0.2.0)
+  - JSPatchSDK (~> 1.5.2)
+  - JZNavigationExtension (~> 1.5.0.1)
+  - MGSwipeTableCell (~> 1.5.5)
+  - RESideMenu (~> 4.0.7)
+  - SnapKit (~> 0.19.1)
+  - SwiftyJSON (~> 2.3.2)
+
+SPEC CHECKSUMS:
+  Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
+  AsyncDisplayKit: 011ea22a76a79a5bbfc14501fede6e0196a3c2f0
+  AsyncSwift: f3ad5dd077bbd1477e7573e87071a532fedaca1a
+  hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
+  JSPatchSDK: d0455b7db2d82df6bee9f3522b5a68e91a6a7072
+  JZNavigationExtension: 7b95d2b1c48846b8bedcb40d767448f14cb9a0b7
+  MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
+  PINCache: 9b66261ade3d4feb272df4b4dd2e035469909448
+  PINRemoteImage: 308731aa6534500e58fc211b9cc2bb7252df25ba
+  RESideMenu: f24c508404b49c667344c54aba7e590883533958
+  SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+
+PODFILE CHECKSUM: 754938ddcea7016d49096d319dda1b87c4834907
+
+COCOAPODS: 1.1.0.beta.1
