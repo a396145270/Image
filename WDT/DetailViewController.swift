@@ -10,11 +10,16 @@ import UIKit
 import Alamofire
 import RESideMenu
 import AsyncDisplayKit
+import MJRefresh
+import Async
+import JTSImageViewController
+import SVProgressHUD
 
-class DetailViewController: ASViewController,ASTableDataSource,ASTableDelegate {
-
+class DetailViewController: ASViewController,ASTableDataSource,ASTableDelegate ,JTSImageViewControllerInteractionsDelegate{
+    
     var _baseUrl = ""
     var _imageCount = 10
+    var _isShowed = false
    
     
     var tableNode: ASTableNode {
@@ -26,68 +31,70 @@ class DetailViewController: ASViewController,ASTableDataSource,ASTableDelegate {
         super.init(node: ASTableNode())
         tableNode.delegate = self
         tableNode.dataSource = self
+        tableNode.view.separatorStyle = .None
+        tableNode.backgroundColor = UIColor.lightGrayColor()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-    
-        return 2
+        
+        return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if 0 == section {
-            return _imageCount
-        }else{
-            return 1
-        }
+        
+        return _imageCount
+        
         
     }
     func tableView(tableView: ASTableView, nodeBlockForRowAtIndexPath indexPath: NSIndexPath) -> ASCellNodeBlock {
         
-        if 0 == indexPath.section{
-            return {
-                
-                return ImageNode(String(format: "%@%02ld.jpg",self._baseUrl,indexPath.row+1))
-            }
-        }else{
-            return {
-                
-                let textNode = ASTextCellNode()
-                
-                textNode.text = "点击加载更多..."
-                textNode.textAttributes = [NSFontAttributeName:UIFont.systemFontOfSize(13),
-                                           NSForegroundColorAttributeName:UIColor.grayColor()]
+        
+        return {
             
-                
-                
-                textNode.selectionStyle = .None
-                
-                return textNode
-            }
+            return ImageNode(String(format: "%@%02ld.jpg",self._baseUrl,indexPath.row+1))
         }
         
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if 1 == indexPath.section{
-            
-            let oldImageCount = _imageCount
-            _imageCount += 5
-            
-            tableView.beginUpdates()
-            
-            let indexPaths = (oldImageCount..<_imageCount).map { index in
-                NSIndexPath(forRow: index, inSection: 0)
-            }
-            
-            tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            
-            
-            tableView.endUpdates()
-        }
-    }
-
     
-  
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let imgNodeCell = tableNode.view.nodeForRowAtIndexPath(indexPath) as! ImageNode
+        
+        let imgInfo = JTSImageInfo()
+        imgInfo.image = imgNodeCell._image.image
+        imgInfo.referenceRect = self.view.frame
+        imgInfo.referenceView = tableView
+        
+        
+        let jtsvc = JTSImageViewController(imageInfo: imgInfo,
+                                           mode: .Image,
+                                           backgroundStyle: .Blurred)
+        
+        jtsvc.interactionsDelegate = self
+        
+        jtsvc.showFromViewController(self, transition: .FromOriginalPosition)
+        
+        
+    }
+    
+    func imageViewerDidLongPress(imageViewer: JTSImageViewController!, atRect rect: CGRect) {
+        
+        UIImageWriteToSavedPhotosAlbum(imageViewer.image, self, #selector(DetailViewController.didFinish(_:err:cont:)), nil)
+    }
+    
+    func didFinish(image:UIImage, err:NSError? ,cont:AnyObject){
+        
+        if err == nil {
+            SVProgressHUD.showSuccessWithStatus("图片已保存至相册")
+        }else{
+            SVProgressHUD.showErrorWithStatus("保存图片失败")
+        }
+        
+    }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -95,15 +102,74 @@ class DetailViewController: ASViewController,ASTableDataSource,ASTableDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        
+        if _internetState == NetworkStatusS.ReachableViaWiFi{
+            self.tableNode.view.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+               
+                Async.main(block: {
+                    
+                    let tableView = self.tableNode.view
+                    
+                    let oldImageCount = self._imageCount
+                    
+                    self._imageCount += 10
+                    
+                    tableView.beginUpdates()
+                    
+                    let indexPaths = (oldImageCount..<self._imageCount).map { index in
+                        NSIndexPath(forRow: index, inSection: 0)
+                    }
+                    
+                    tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+                    
+                    
+                    tableView.endUpdates()
+                    
+                    tableView.mj_footer.endRefreshing()
+                })
+                
+            })
+        }else if _internetState == NetworkStatusS.ReachableViaWWAN{
+            
+            self.tableNode.view.mj_footer = MJRefreshBackNormalFooter(refreshingBlock: {
+                
+                Async.main(after: 0.5, block: {
+                    
+                    let tableView = self.tableNode.view
+                    
+                    let oldImageCount = self._imageCount
+                    
+                    self._imageCount += 5
+                    
+                    tableView.beginUpdates()
+                    
+                    let indexPaths = (oldImageCount..<self._imageCount).map { index in
+                        NSIndexPath(forRow: index, inSection: 0)
+                    }
+                    
+                    tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+                    
+                    
+                    tableView.endUpdates()
+                    
+                    tableView.mj_footer.endRefreshing()
+                })
+                
+            })
+        }else{
+            self.tableNode.view.mj_footer = nil
+        }
+        
+        
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-
+    
+    
 }

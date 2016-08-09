@@ -12,6 +12,7 @@
 		710ABBCA1D558C1E0098AC03 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 710ABBC91D558C1E0098AC03 /* libz.tbd */; };
 		710ABBD01D55CABE0098AC03 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 710ABBCE1D55CABE0098AC03 /* add.png */; };
 		710ABBD11D55CABE0098AC03 /* rel.png in Resources */ = {isa = PBXBuildFile; fileRef = 710ABBCF1D55CABE0098AC03 /* rel.png */; };
+		7148AF091D595BBF001E77A6 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7148AF081D595BBF001E77A6 /* 1.jpg */; };
 		714E2EE51D4EE4330036E5D0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 714E2EE41D4EE4330036E5D0 /* LaunchScreen.xib */; };
 		7151F8051D54255C00D25AB6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7151F8041D54255C00D25AB6 /* DetailViewController.swift */; };
 		71B79F471D4C869100BAAA5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B79F461D4C869100BAAA5E /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		710ABBC91D558C1E0098AC03 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		710ABBCE1D55CABE0098AC03 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		710ABBCF1D55CABE0098AC03 /* rel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rel.png; sourceTree = "<group>"; };
+		7148AF081D595BBF001E77A6 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		714E2EE11D4EDEC60036E5D0 /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
 		714E2EE41D4EE4330036E5D0 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		7151F8041D54255C00D25AB6 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		710ABBCD1D55CABE0098AC03 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				7148AF081D595BBF001E77A6 /* 1.jpg */,
 				710ABBCE1D55CABE0098AC03 /* add.png */,
 				710ABBCF1D55CABE0098AC03 /* rel.png */,
 			);
@@ -161,6 +164,7 @@
 				TargetAttributes = {
 					71B79F421D4C869100BAAA5E = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7KC9325D68;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -192,6 +196,7 @@
 				710ABBD11D55CABE0098AC03 /* rel.png in Resources */,
 				714E2EE51D4EE4330036E5D0 /* LaunchScreen.xib in Resources */,
 				71B79F4E1D4C869100BAAA5E /* Assets.xcassets in Resources */,
+				7148AF091D595BBF001E77A6 /* 1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +230,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E68FC2A52C5844038FF2AD94 /* [CP] Copy Pods Resources */ = {
@@ -351,11 +356,15 @@
 			baseConfigurationReference = 8BBB91BA6C0AEAE2F1119642 /* Pods-WDT.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = WDT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = WDnews.WDT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hgzp.wdnews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "aba2129a-0e0a-4783-af77-72140d02df99";
 				SWIFT_OBJC_BRIDGING_HEADER = WDT/Bridge.h;
 				SWIFT_VERSION = 2.3;
 			};
@@ -366,11 +375,15 @@
 			baseConfigurationReference = 243D71A361A81218E72C841E /* Pods-WDT.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Weifang Beida Jade Bird Huaguang Imagesetter Co.,Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Weifang Beida Jade Bird Huaguang Imagesetter Co.,Ltd.";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = WDT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = WDnews.WDT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hgzp.wdnews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "aba2129a-0e0a-4783-af77-72140d02df99";
 				SWIFT_OBJC_BRIDGING_HEADER = WDT/Bridge.h;
 				SWIFT_VERSION = 2.3;
 			};

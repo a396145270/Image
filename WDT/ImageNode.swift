@@ -8,7 +8,8 @@
 
 import UIKit
 import AsyncDisplayKit
-
+import PINCache
+import Async
 
 class ImageNode: ASCellNode,ASNetworkImageNodeDelegate {
     
@@ -16,7 +17,7 @@ class ImageNode: ASCellNode,ASNetworkImageNodeDelegate {
     
     var _ratio:CGFloat = 1.0
     
-     init(_ url:String){
+    init(_ url:String){
         super.init()
         
         _image.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
@@ -26,11 +27,13 @@ class ImageNode: ASCellNode,ASNetworkImageNodeDelegate {
         addSubnode(_image)
         
     }
-
+    
     
     override func layoutSpecThatFits(constrainedSize: ASSizeRange) -> ASLayoutSpec {
         
-        return ASRatioLayoutSpec(ratio: _ratio, child: _image)
+        return ASInsetLayoutSpec(insets: UIEdgeInsetsMake(4, 0, 4, 0), child: ASRatioLayoutSpec(ratio: _ratio, child: _image))
+        
+        // return ASRatioLayoutSpec(ratio: _ratio, child: _image)
         
     }
     func imageNode(imageNode: ASNetworkImageNode, didLoadImage image: UIImage) {
@@ -41,6 +44,20 @@ class ImageNode: ASCellNode,ASNetworkImageNodeDelegate {
         
         imageNode.setNeedsLayout()
         
+        Async.background {
+            
+            let dt = UIImagePNGRepresentation(image)
+            
+            
+            if dt!.isEqualToData(_defImageData!){
+                
+                let key = PINRemoteImageManager.sharedImageManager().cacheKeyForURL(self._image.URL!, processorKey: nil)
+                
+                PINRemoteImageManager.sharedImageManager().defaultImageCache().removeObjectForKey(key)
+                
+            }
+        }
+        
     }
-
+    
 }

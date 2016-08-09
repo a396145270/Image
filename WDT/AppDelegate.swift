@@ -9,13 +9,12 @@
 import UIKit
 import RESideMenu
 
-
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+   
     let _leftView = LeftViewController()
     let _contentView =   ViewController()
     
@@ -49,11 +48,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSUserDefaults().setObject(dt, forKey: "AllData")
         }
         
+       
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         self.window!.backgroundColor = UIColor.whiteColor()
         
-      
         
         _leftView.detailView = _contentView
         
@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         v3.scaleMenuView = false
         v3.scaleContentView = false
-       
+        v3.backgroundImage = UIImage(named: "1.jpg")
         
         self.window!.rootViewController = v3
         
@@ -84,6 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
+   
     
 }
 

@@ -10,6 +10,9 @@
 #define Bridge_h
 
 #import "Alamofire/Alamofire-umbrella.h"
-#import "hpple/hpple-umbrella.h"
+//#import "hpple/hpple-umbrella.h"
 #import "MGSwipeTableCell/MGSwipeTableCell-umbrella.h"
+#import "MJRefresh/MJRefresh-umbrella.h"
+#import "JTSImageViewController/JTSImageViewController-umbrella.h"
+#import "SVProgressHUD/SVProgressHUD-umbrella.h"
 #endif /* Bridge_h */
